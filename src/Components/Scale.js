@@ -1,4 +1,4 @@
-function Scale({ purpose, id, setFunction }) {
+function Scale({ purpose, id, setFunction, value }) {
   const handleScaleChange = (value, operation) => {
     operation(value);
   };
@@ -12,6 +12,7 @@ function Scale({ purpose, id, setFunction }) {
         name="numberInput"
         min={1}
         max={10}
+        value={value}
         onChange={(e) => handleScaleChange(e.target.value, setFunction)}
       />
     </div>

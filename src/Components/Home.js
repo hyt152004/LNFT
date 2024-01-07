@@ -4,15 +4,13 @@ import CurrentTime from "./CurrentTime";
 import Scale from "./Scale";
 import DayButtonList from "./DayButtonList";
 
-function Home() {
+function Home({ setCurrentDayDisplay, listOfDayRecords, setListOfDayRecords }) {
   const [questionOneResponse, setQuestionOneResponse] = useState("");
   const [questionTwoResponse, setQuestionTwoResponse] = useState("");
   const [questionThreeResponse, setQuestionThreeResponse] = useState("");
-  const [emotionScaleSelected, setEmotionScaleSelected] = useState(-1);
-  const [dayScoreSelected, setDayScoreSelected] = useState(-1);
-  const [listOfDayRecords, setListOfDayRecords] = useState([]);
+  const [emotionScaleSelected, setEmotionScaleSelected] = useState(5);
+  const [dayScoreSelected, setDayScoreSelected] = useState(5);
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [currentDayDisplay, setCurrentDayDisplay] = useState([]);
 
   const handleSubmit = () => {
     const form = {
@@ -27,8 +25,8 @@ function Home() {
     setQuestionOneResponse("");
     setQuestionTwoResponse("");
     setQuestionThreeResponse("");
-    setEmotionScaleSelected(-1);
-    setDayScoreSelected(-1);
+    setEmotionScaleSelected(5);
+    setDayScoreSelected(5);
   };
 
   useEffect(() => {
@@ -82,11 +80,13 @@ function Home() {
         purpose="Emotion Scale"
         id="selectEmotionScale"
         setFunction={setEmotionScaleSelected}
+        value={emotionScaleSelected}
       />
       <Scale
         purpose="Day Score"
         id="selectDayScore"
         setFunction={setDayScoreSelected}
+        value={dayScoreSelected}
       />
 
       <div className="submit">
@@ -95,7 +95,6 @@ function Home() {
 
       <DayButtonList
         listOfDayRecords={listOfDayRecords}
-        currentDayDisplay={currentDayDisplay}
         handleDayButton={handleDayButton}
       />
     </div>
