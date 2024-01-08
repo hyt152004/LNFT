@@ -48,8 +48,11 @@ function App() {
     return threeQuestions;
   };
 
-  const threeQ = threeRandomQuestions();
-
+  // here since a function cannot be called before its initialization
+  const [currentDayIndex, setCurrentDayIndex] = useState(0);
+  const [listOfThreeQuestions, setListOfThreeQuestions] = useState([
+    threeRandomQuestions(),
+  ]);
   return (
     <Router>
       <nav>
@@ -70,14 +73,22 @@ function App() {
               setCurrentDayDisplay={setCurrentDayDisplay}
               listOfDayRecords={listOfDayRecords}
               setListOfDayRecords={setListOfDayRecords}
-              threeQ={threeQ}
+              currentDayIndex={currentDayIndex}
+              listOfThreeQuestions={listOfThreeQuestions}
+              setCurrentDayIndex={setCurrentDayIndex}
+              setListOfThreeQuestions={setListOfThreeQuestions}
+              threeRandomQuestions={threeRandomQuestions()}
             />
           }
         />
         <Route
           path="/about"
           element={
-            <DayPage currentDayDisplay={currentDayDisplay} threeQ={threeQ} />
+            <DayPage
+              currentDayDisplay={currentDayDisplay}
+              currentDayIndex={currentDayIndex}
+              listOfThreeQuestions={listOfThreeQuestions}
+            />
           }
         />
       </Routes>

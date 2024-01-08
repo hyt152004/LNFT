@@ -5,10 +5,14 @@ import Scale from "./Scale";
 import DayButtonList from "./DayButtonList";
 
 function Home({
-  threeQ,
   setCurrentDayDisplay,
   listOfDayRecords,
   setListOfDayRecords,
+  currentDayIndex,
+  listOfThreeQuestions,
+  setCurrentDayIndex,
+  setListOfThreeQuestions,
+  threeRandomQuestions,
 }) {
   const [questionOneResponse, setQuestionOneResponse] = useState("");
   const [questionTwoResponse, setQuestionTwoResponse] = useState("");
@@ -18,6 +22,11 @@ function Home({
   const [currentDate, setCurrentDate] = useState(new Date());
 
   const handleSubmit = () => {
+    setCurrentDayIndex(currentDayIndex + 1);
+    setListOfThreeQuestions((listOfThreeQuestions) => [
+      ...listOfThreeQuestions,
+      threeRandomQuestions,
+    ]);
     const form = {
       questionOneResponse,
       questionTwoResponse,
@@ -60,21 +69,21 @@ function Home({
       </div>
       <div className="questions">
         <Question
-          question={threeQ[0]}
+          question={listOfThreeQuestions[currentDayIndex][0]}
           name="firstQuestion"
           value={questionOneResponse}
           setFunction={setQuestionOneResponse}
         />
 
         <Question
-          question={threeQ[1]}
+          question={listOfThreeQuestions[currentDayIndex][1]}
           name="secondQuestion"
           value={questionTwoResponse}
           setFunction={setQuestionTwoResponse}
         />
 
         <Question
-          question={threeQ[2]}
+          question={listOfThreeQuestions[currentDayIndex][2]}
           name="thirdQuestion"
           value={questionThreeResponse}
           setFunction={setQuestionThreeResponse}
