@@ -4,7 +4,12 @@ import CurrentTime from "./CurrentTime";
 import Scale from "./Scale";
 import DayButtonList from "./DayButtonList";
 
-function Home({ setCurrentDayDisplay, listOfDayRecords, setListOfDayRecords }) {
+function Home({
+  threeQ,
+  setCurrentDayDisplay,
+  listOfDayRecords,
+  setListOfDayRecords,
+}) {
   const [questionOneResponse, setQuestionOneResponse] = useState("");
   const [questionTwoResponse, setQuestionTwoResponse] = useState("");
   const [questionThreeResponse, setQuestionThreeResponse] = useState("");
@@ -55,21 +60,21 @@ function Home({ setCurrentDayDisplay, listOfDayRecords, setListOfDayRecords }) {
       </div>
       <div className="questions">
         <Question
-          question="What was the best things that happened today?"
+          question={threeQ[0]}
           name="firstQuestion"
           value={questionOneResponse}
           setFunction={setQuestionOneResponse}
         />
 
         <Question
-          question="How could today have been better?"
+          question={threeQ[1]}
           name="secondQuestion"
           value={questionTwoResponse}
           setFunction={setQuestionTwoResponse}
         />
 
         <Question
-          question="What do I love about myself?"
+          question={threeQ[2]}
           name="thirdQuestion"
           value={questionThreeResponse}
           setFunction={setQuestionThreeResponse}

@@ -1,8 +1,11 @@
-function DayPage({ currentDayDisplay }) {
+function DayPage({ threeQ, currentDayDisplay, currentDayIndex }) {
   return (
     <div>
       {currentDayDisplay.map((info, idx) => (
-        <p key={idx}>{info}</p>
+        <div key={idx}>
+          <b>{threeQ[idx]}</b>
+          <p>{info}</p>
+        </div>
       ))}
     </div>
   );

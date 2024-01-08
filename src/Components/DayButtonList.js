@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
 
-function DayButtonList({ listOfDayRecords, handleDayButton }) {
+function DayButtonList({
+  listOfDayRecords,
+  currentDayDisplay,
+  handleDayButton,
+}) {
   return (
     <div>
       <div className="listOfDayRecords">
