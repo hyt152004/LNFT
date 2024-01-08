@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function DayButtonList({
   listOfDayRecords,
   currentDayDisplay,
@@ -7,19 +9,15 @@ function DayButtonList({
     <div>
       <div className="listOfDayRecords">
         {listOfDayRecords.map((day, idx) => (
-          <button
-            onClick={() => {
-              handleDayButton(idx);
-            }}
-            key={idx}
-          >
-            Day {idx + 1}
-          </button>
-        ))}
-      </div>
-      <div className="displayDay">
-        {currentDayDisplay.map((info, idx) => (
-          <p key={idx}>{info}</p>
+          <Link key={idx} to="/about">
+            <button
+              onClick={() => {
+                handleDayButton(idx);
+              }}
+            >
+              Day {idx + 1}
+            </button>
+          </Link>
         ))}
       </div>
     </div>
