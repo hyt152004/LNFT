@@ -52,6 +52,7 @@ function Home({
   }, []);
 
   const handleDayButton = (idx) => {
+    setCurrentDayIndex(idx + 1);
     setCurrentDayDisplay([
       listOfDayRecords[idx]?.questionOneResponse,
       listOfDayRecords[idx]?.questionTwoResponse,
@@ -110,6 +111,7 @@ function Home({
       <DayButtonList
         listOfDayRecords={listOfDayRecords}
         handleDayButton={handleDayButton}
+        currentDate={currentDate}
       />
     </div>
   );

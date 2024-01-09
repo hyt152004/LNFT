@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 
-function DayButtonList({
-  listOfDayRecords,
-  currentDayDisplay,
-  handleDayButton,
-}) {
+function DayButtonList({ listOfDayRecords, handleDayButton, currentDate }) {
+  const formattedDate = currentDate.toLocaleString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
   return (
     <div>
       <div className="listOfDayRecords">
@@ -15,7 +17,7 @@ function DayButtonList({
                 handleDayButton(idx);
               }}
             >
-              Day {idx + 1}
+              {formattedDate}
             </button>
           </Link>
         ))}
