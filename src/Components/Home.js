@@ -8,8 +8,6 @@ function Home({
   setCurrentDayDisplay,
   listOfDayRecords,
   setListOfDayRecords,
-  currentDayIndex,
-  listOfThreeQuestions,
   setCurrentDayIndex,
   setListOfThreeQuestions,
   threeRandomQuestions,
@@ -69,13 +67,18 @@ function Home({
   // when a Day button is pressed we set Current Day Display accordingly
   const handleDayButton = (idx) => {
     setCurrentDayIndex(idx);
-    setCurrentDayDisplay([
-      listOfDayRecords[idx]?.questionOneResponse,
-      listOfDayRecords[idx]?.questionTwoResponse,
-      listOfDayRecords[idx]?.questionThreeResponse,
-      listOfDayRecords[idx]?.emotionScaleSelected,
-      listOfDayRecords[idx]?.dayScoreSelected,
-    ]);
+
+    setCurrentDayDisplay(() => {
+      const updatedList = [
+        listOfDayRecords[idx]?.questionOneResponse,
+        listOfDayRecords[idx]?.questionTwoResponse,
+        listOfDayRecords[idx]?.questionThreeResponse,
+        listOfDayRecords[idx]?.emotionScaleSelected,
+        listOfDayRecords[idx]?.dayScoreSelected,
+      ];
+      localStorage.setItem("currentDayDisplay", JSON.stringify(updatedList));
+      return updatedList;
+    });
   };
 
   // returns listOfDayRecords stored in localStorage

@@ -93,7 +93,9 @@ function App() {
           path="/about"
           element={
             <DayPage
-              currentDayDisplay={currentDayDisplay}
+              currentDayDisplay={JSON.parse(
+                localStorage.getItem("currentDayDisplay")
+              )}
               currentDayIndex={currentDayIndex}
               setCurrentDayIndex={setCurrentDayIndex}
               listOfThreeQuestions={listOfThreeQuestions}
