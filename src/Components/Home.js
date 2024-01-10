@@ -41,6 +41,15 @@ function Home({
     setQuestionThreeResponse("");
     setEmotionScaleSelected(5);
     setDayScoreSelected(5);
+    localStorage.setItem("listOfDayRecords", JSON.stringify(listOfDayRecords));
+    localStorage.setItem(
+      "listOfThreeQuestions",
+      JSON.stringify(listOfThreeQuestions)
+    );
+  };
+
+  const handleClear = () => {
+    localStorage.clear();
   };
 
   useEffect(() => {
@@ -62,6 +71,11 @@ function Home({
     ]);
   };
 
+  const getUpdatedListOfDayRecords = () => {
+    const parsedData = JSON.parse(localStorage.getItem("listOfDayRecords"));
+    return parsedData;
+  };
+
   return (
     <div className="App">
       <hr />
@@ -70,21 +84,21 @@ function Home({
       </div>
       <div className="questions">
         <Question
-          question={listOfThreeQuestions[currentDayIndex][0]}
+          question={threeRandomQuestions[0]}
           name="firstQuestion"
           value={questionOneResponse}
           setFunction={setQuestionOneResponse}
         />
 
         <Question
-          question={listOfThreeQuestions[currentDayIndex][1]}
+          question={threeRandomQuestions[1]}
           name="secondQuestion"
           value={questionTwoResponse}
           setFunction={setQuestionTwoResponse}
         />
 
         <Question
-          question={listOfThreeQuestions[currentDayIndex][2]}
+          question={threeRandomQuestions[2]}
           name="thirdQuestion"
           value={questionThreeResponse}
           setFunction={setQuestionThreeResponse}
@@ -104,12 +118,13 @@ function Home({
         value={dayScoreSelected}
       />
 
-      <div className="submit">
+      <div className="endAction">
         <button onClick={handleSubmit}>Submit</button>
+        <button onClick={handleClear}>Clear</button>
       </div>
 
       <DayButtonList
-        listOfDayRecords={listOfDayRecords}
+        listOfDayRecords={getUpdatedListOfDayRecords()}
         handleDayButton={handleDayButton}
         currentDate={currentDate}
       />

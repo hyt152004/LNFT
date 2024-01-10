@@ -3,7 +3,7 @@ function DayPage({ currentDayDisplay, currentDayIndex, listOfThreeQuestions }) {
     <div>
       {currentDayDisplay.map((info, idx) => (
         <div key={idx}>
-          <b>{listOfThreeQuestions[currentDayIndex - 1][idx]}</b>
+          <b>{listOfThreeQuestions[currentDayIndex - 1]?.[idx]}</b>
           <p>{info}</p>
         </div>
       ))}

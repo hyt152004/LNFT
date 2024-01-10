@@ -10,17 +10,23 @@ function DayButtonList({ listOfDayRecords, handleDayButton, currentDate }) {
   return (
     <div>
       <div className="listOfDayRecords">
-        {listOfDayRecords.map((day, idx) => (
-          <Link key={idx} to="/about">
-            <button
-              onClick={() => {
-                handleDayButton(idx);
-              }}
-            >
-              {formattedDate}
-            </button>
-          </Link>
-        ))}
+        {listOfDayRecords &&
+        Array.isArray(listOfDayRecords) &&
+        listOfDayRecords.length > 0 ? (
+          listOfDayRecords.map((day, idx) => (
+            <Link key={idx} to="/about">
+              <button
+                onClick={() => {
+                  handleDayButton(idx);
+                }}
+              >
+                {formattedDate}
+              </button>
+            </Link>
+          ))
+        ) : (
+          <p>No records available</p>
+        )}
       </div>
     </div>
   );

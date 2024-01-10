@@ -13,7 +13,7 @@ function App() {
     "What was the best thing that happened today?",
     "How could today have been better?",
     "What do I love about myself?",
-    "What challenges did I face, and how did I overcome them?",
+    "What challenges did I face and how did I overcome them?",
     "Did I make progress toward my goals today?",
     "What am I grateful for?",
     "Did I practice self-care today?",
@@ -53,6 +53,12 @@ function App() {
   const [listOfThreeQuestions, setListOfThreeQuestions] = useState([
     threeRandomQuestions(),
   ]);
+
+  const getUpdatedListOfThreeQuestions = () => {
+    const parsedData = JSON.parse(localStorage.getItem("listOfThreeQuestions"));
+    return parsedData;
+  };
+
   return (
     <Router>
       <nav>
@@ -87,7 +93,7 @@ function App() {
             <DayPage
               currentDayDisplay={currentDayDisplay}
               currentDayIndex={currentDayIndex}
-              listOfThreeQuestions={listOfThreeQuestions}
+              listOfThreeQuestions={getUpdatedListOfThreeQuestions()}
             />
           }
         />
