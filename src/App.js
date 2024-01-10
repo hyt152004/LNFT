@@ -59,15 +59,7 @@ function App() {
 
   // stores an array of questions seen so far (2D array)
   // here since a function cannot be called before its initialization
-  const [listOfThreeQuestions, setListOfThreeQuestions] = useState([
-    threeRandomQuestions(),
-  ]);
-
-  // returns listOfThreeQuestions stored in localStorage
-  const getListOfThreeQuestions = () => {
-    const parsedData = JSON.parse(localStorage.getItem("listOfThreeQuestions"));
-    return parsedData;
-  };
+  const [listOfThreeQuestions, setListOfThreeQuestions] = useState([]);
 
   return (
     <Router>
@@ -103,7 +95,8 @@ function App() {
             <DayPage
               currentDayDisplay={currentDayDisplay}
               currentDayIndex={currentDayIndex}
-              listOfThreeQuestions={getListOfThreeQuestions()}
+              setCurrentDayIndex={setCurrentDayIndex}
+              listOfThreeQuestions={listOfThreeQuestions}
             />
           }
         />

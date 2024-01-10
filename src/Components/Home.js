@@ -26,11 +26,12 @@ function Home({
   // all input options are set back to default.
   // listOfThreeQuestions and listOfDayRecords is updated for localStorage
   const handleSubmit = () => {
-    // setCurrentDayIndex(currentDayIndex + 1);
-    setListOfThreeQuestions((listOfThreeQuestions) => [
-      ...listOfThreeQuestions,
-      threeRandomQuestions,
-    ]);
+    setListOfThreeQuestions((listOfThreeQuestions) => {
+      const updatedList = [...listOfThreeQuestions, threeRandomQuestions];
+      localStorage.setItem("listOfThreeQuestions", JSON.stringify(updatedList));
+      return updatedList;
+    });
+
     const form = {
       questionOneResponse,
       questionTwoResponse,
@@ -39,18 +40,16 @@ function Home({
       dayScoreSelected,
     };
 
-    setListOfDayRecords((listOfDayRecords) => [...listOfDayRecords, form]);
+    setListOfDayRecords((listOfDayRecords) => {
+      const updatedList = [...listOfDayRecords, form];
+      localStorage.setItem("listOfDayRecords", JSON.stringify(updatedList));
+      return updatedList;
+    });
     setQuestionOneResponse("");
     setQuestionTwoResponse("");
     setQuestionThreeResponse("");
     setEmotionScaleSelected(5);
     setDayScoreSelected(5);
-    localStorage.setItem("listOfDayRecords", JSON.stringify(listOfDayRecords));
-    console.log(getListOfDayRecords());
-    localStorage.setItem(
-      "listOfThreeQuestions",
-      JSON.stringify(listOfThreeQuestions)
-    );
   };
 
   // clears all localStorage when "Clear" is pressed
@@ -82,7 +81,6 @@ function Home({
   // returns listOfDayRecords stored in localStorage
   const getListOfDayRecords = () => {
     const parsedData = JSON.parse(localStorage.getItem("listOfDayRecords"));
-
     return parsedData;
   };
 
