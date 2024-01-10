@@ -5,10 +5,18 @@ import DayPage from "./Components/DayPage";
 import { useState } from "react";
 
 function App() {
+  // naming tab header name
   document.title = "Let's Not Forget Today";
+
+  // stores an array of information for ONE day to be displayed on "DayPage"
   const [currentDayDisplay, setCurrentDayDisplay] = useState([]);
+  // stores an array of information for all the days (2D array)
   const [listOfDayRecords, setListOfDayRecords] = useState([]);
 
+  // stores index to be used to display specific day info and its corresponding questions
+  const [currentDayIndex, setCurrentDayIndex] = useState(0);
+
+  // manually generated questions to ask user
   const listOfQuestions = [
     "What was the best thing that happened today?",
     "How could today have been better?",
@@ -27,6 +35,7 @@ function App() {
     "What is one thing I can do differently tomorrow to improve?",
   ];
 
+  // returns an array of three random questions
   const threeRandomQuestions = () => {
     let listOfInt = [];
 
@@ -48,13 +57,14 @@ function App() {
     return threeQuestions;
   };
 
+  // stores an array of questions seen so far (2D array)
   // here since a function cannot be called before its initialization
-  const [currentDayIndex, setCurrentDayIndex] = useState(0);
   const [listOfThreeQuestions, setListOfThreeQuestions] = useState([
     threeRandomQuestions(),
   ]);
 
-  const getUpdatedListOfThreeQuestions = () => {
+  // returns listOfThreeQuestions stored in localStorage
+  const getListOfThreeQuestions = () => {
     const parsedData = JSON.parse(localStorage.getItem("listOfThreeQuestions"));
     return parsedData;
   };
@@ -93,7 +103,7 @@ function App() {
             <DayPage
               currentDayDisplay={currentDayDisplay}
               currentDayIndex={currentDayIndex}
-              listOfThreeQuestions={getUpdatedListOfThreeQuestions()}
+              listOfThreeQuestions={getListOfThreeQuestions()}
             />
           }
         />

@@ -14,6 +14,7 @@ function Home({
   setListOfThreeQuestions,
   threeRandomQuestions,
 }) {
+  // user's input
   const [questionOneResponse, setQuestionOneResponse] = useState("");
   const [questionTwoResponse, setQuestionTwoResponse] = useState("");
   const [questionThreeResponse, setQuestionThreeResponse] = useState("");
@@ -21,8 +22,11 @@ function Home({
   const [dayScoreSelected, setDayScoreSelected] = useState(5);
   const [currentDate, setCurrentDate] = useState(new Date());
 
+  // when "Submit" is pressed, listOfThreeQuestions and listOfDayRecords is updated.
+  // all input options are set back to default.
+  // listOfThreeQuestions and listOfDayRecords is updated for localStorage
   const handleSubmit = () => {
-    setCurrentDayIndex(currentDayIndex + 1);
+    // setCurrentDayIndex(currentDayIndex + 1);
     setListOfThreeQuestions((listOfThreeQuestions) => [
       ...listOfThreeQuestions,
       threeRandomQuestions,
@@ -42,16 +46,19 @@ function Home({
     setEmotionScaleSelected(5);
     setDayScoreSelected(5);
     localStorage.setItem("listOfDayRecords", JSON.stringify(listOfDayRecords));
+    console.log(getListOfDayRecords());
     localStorage.setItem(
       "listOfThreeQuestions",
       JSON.stringify(listOfThreeQuestions)
     );
   };
 
+  // clears all localStorage when "Clear" is pressed
   const handleClear = () => {
     localStorage.clear();
   };
 
+  // updates clock every second
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentDate(new Date());
@@ -60,8 +67,9 @@ function Home({
     return () => clearInterval(intervalId);
   }, []);
 
+  // when a Day button is pressed we set Current Day Display accordingly
   const handleDayButton = (idx) => {
-    setCurrentDayIndex(idx + 1);
+    setCurrentDayIndex(idx);
     setCurrentDayDisplay([
       listOfDayRecords[idx]?.questionOneResponse,
       listOfDayRecords[idx]?.questionTwoResponse,
@@ -71,8 +79,10 @@ function Home({
     ]);
   };
 
-  const getUpdatedListOfDayRecords = () => {
+  // returns listOfDayRecords stored in localStorage
+  const getListOfDayRecords = () => {
     const parsedData = JSON.parse(localStorage.getItem("listOfDayRecords"));
+
     return parsedData;
   };
 
@@ -124,7 +134,7 @@ function Home({
       </div>
 
       <DayButtonList
-        listOfDayRecords={getUpdatedListOfDayRecords()}
+        listOfDayRecords={getListOfDayRecords()}
         handleDayButton={handleDayButton}
         currentDate={currentDate}
       />
