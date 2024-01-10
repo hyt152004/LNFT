@@ -5,11 +5,14 @@ import Scale from "./Scale";
 import DayButtonList from "./DayButtonList";
 
 function Home({
-  threeQ,
   setCurrentDayDisplay,
   listOfDayRecords,
   setListOfDayRecords,
+  setCurrentDayIndex,
+  setListOfThreeQuestions,
+  threeRandomQuestions,
 }) {
+  // user's input
   const [questionOneResponse, setQuestionOneResponse] = useState("");
   const [questionTwoResponse, setQuestionTwoResponse] = useState("");
   const [questionThreeResponse, setQuestionThreeResponse] = useState("");
@@ -17,7 +20,16 @@ function Home({
   const [dayScoreSelected, setDayScoreSelected] = useState(5);
   const [currentDate, setCurrentDate] = useState(new Date());
 
+  // when "Submit" is pressed, listOfThreeQuestions and listOfDayRecords is updated.
+  // all input options are set back to default.
+  // listOfThreeQuestions and listOfDayRecords is updated for localStorage
   const handleSubmit = () => {
+    setListOfThreeQuestions((listOfThreeQuestions) => {
+      const updatedList = [...listOfThreeQuestions, threeRandomQuestions];
+      localStorage.setItem("listOfThreeQuestions", JSON.stringify(updatedList));
+      return updatedList;
+    });
+
     const form = {
       questionOneResponse,
       questionTwoResponse,
@@ -26,7 +38,11 @@ function Home({
       dayScoreSelected,
     };
 
-    setListOfDayRecords((listOfDayRecords) => [...listOfDayRecords, form]);
+    setListOfDayRecords((listOfDayRecords) => {
+      const updatedList = [...listOfDayRecords, form];
+      localStorage.setItem("listOfDayRecords", JSON.stringify(updatedList));
+      return updatedList;
+    });
     setQuestionOneResponse("");
     setQuestionTwoResponse("");
     setQuestionThreeResponse("");
@@ -34,6 +50,12 @@ function Home({
     setDayScoreSelected(5);
   };
 
+  // clears all localStorage when "Clear" is pressed
+  const handleClear = () => {
+    localStorage.clear();
+  };
+
+  // updates clock every second
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentDate(new Date());
@@ -42,14 +64,27 @@ function Home({
     return () => clearInterval(intervalId);
   }, []);
 
+  // when a Day button is pressed we set Current Day Display accordingly
   const handleDayButton = (idx) => {
-    setCurrentDayDisplay([
-      listOfDayRecords[idx]?.questionOneResponse,
-      listOfDayRecords[idx]?.questionTwoResponse,
-      listOfDayRecords[idx]?.questionThreeResponse,
-      listOfDayRecords[idx]?.emotionScaleSelected,
-      listOfDayRecords[idx]?.dayScoreSelected,
-    ]);
+    setCurrentDayIndex(idx);
+
+    setCurrentDayDisplay(() => {
+      const updatedList = [
+        listOfDayRecords[idx]?.questionOneResponse,
+        listOfDayRecords[idx]?.questionTwoResponse,
+        listOfDayRecords[idx]?.questionThreeResponse,
+        listOfDayRecords[idx]?.emotionScaleSelected,
+        listOfDayRecords[idx]?.dayScoreSelected,
+      ];
+      localStorage.setItem("currentDayDisplay", JSON.stringify(updatedList));
+      return updatedList;
+    });
+  };
+
+  // returns listOfDayRecords stored in localStorage
+  const getListOfDayRecords = () => {
+    const parsedData = JSON.parse(localStorage.getItem("listOfDayRecords"));
+    return parsedData;
   };
 
   return (
@@ -60,21 +95,21 @@ function Home({
       </div>
       <div className="questions">
         <Question
-          question={threeQ[0]}
+          question={threeRandomQuestions[0]}
           name="firstQuestion"
           value={questionOneResponse}
           setFunction={setQuestionOneResponse}
         />
 
         <Question
-          question={threeQ[1]}
+          question={threeRandomQuestions[1]}
           name="secondQuestion"
           value={questionTwoResponse}
           setFunction={setQuestionTwoResponse}
         />
 
         <Question
-          question={threeQ[2]}
+          question={threeRandomQuestions[2]}
           name="thirdQuestion"
           value={questionThreeResponse}
           setFunction={setQuestionThreeResponse}
@@ -94,13 +129,15 @@ function Home({
         value={dayScoreSelected}
       />
 
-      <div className="submit">
+      <div className="endAction">
         <button onClick={handleSubmit}>Submit</button>
+        <button onClick={handleClear}>Clear</button>
       </div>
 
       <DayButtonList
-        listOfDayRecords={listOfDayRecords}
+        listOfDayRecords={getListOfDayRecords()}
         handleDayButton={handleDayButton}
+        currentDate={currentDate}
       />
     </div>
   );

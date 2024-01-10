@@ -5,15 +5,23 @@ import DayPage from "./Components/DayPage";
 import { useState } from "react";
 
 function App() {
+  // naming tab header name
   document.title = "Let's Not Forget Today";
+
+  // stores an array of information for ONE day to be displayed on "DayPage"
   const [currentDayDisplay, setCurrentDayDisplay] = useState([]);
+  // stores an array of information for all the days (2D array)
   const [listOfDayRecords, setListOfDayRecords] = useState([]);
 
+  // stores index to be used to display specific day info and its corresponding questions
+  const [currentDayIndex, setCurrentDayIndex] = useState(0);
+
+  // manually generated questions to ask user
   const listOfQuestions = [
     "What was the best thing that happened today?",
     "How could today have been better?",
     "What do I love about myself?",
-    "What challenges did I face, and how did I overcome them?",
+    "What challenges did I face and how did I overcome them?",
     "Did I make progress toward my goals today?",
     "What am I grateful for?",
     "Did I practice self-care today?",
@@ -27,6 +35,7 @@ function App() {
     "What is one thing I can do differently tomorrow to improve?",
   ];
 
+  // returns an array of three random questions
   const threeRandomQuestions = () => {
     let listOfInt = [];
 
@@ -48,7 +57,9 @@ function App() {
     return threeQuestions;
   };
 
-  const threeQ = threeRandomQuestions();
+  // stores an array of questions seen so far (2D array)
+  // here since a function cannot be called before its initialization
+  const [listOfThreeQuestions, setListOfThreeQuestions] = useState([]);
 
   return (
     <Router>
@@ -70,14 +81,25 @@ function App() {
               setCurrentDayDisplay={setCurrentDayDisplay}
               listOfDayRecords={listOfDayRecords}
               setListOfDayRecords={setListOfDayRecords}
-              threeQ={threeQ}
+              currentDayIndex={currentDayIndex}
+              listOfThreeQuestions={listOfThreeQuestions}
+              setCurrentDayIndex={setCurrentDayIndex}
+              setListOfThreeQuestions={setListOfThreeQuestions}
+              threeRandomQuestions={threeRandomQuestions()}
             />
           }
         />
         <Route
           path="/about"
           element={
-            <DayPage currentDayDisplay={currentDayDisplay} threeQ={threeQ} />
+            <DayPage
+              currentDayDisplay={JSON.parse(
+                localStorage.getItem("currentDayDisplay")
+              )}
+              currentDayIndex={currentDayIndex}
+              setCurrentDayIndex={setCurrentDayIndex}
+              listOfThreeQuestions={listOfThreeQuestions}
+            />
           }
         />
       </Routes>
