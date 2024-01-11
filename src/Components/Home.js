@@ -6,7 +6,7 @@ import DayButtonList from "./DayButtonList";
 
 function Home({
   setCurrentDayDisplay,
-  listOfDayRecords,
+
   setListOfDayRecords,
   setCurrentDayIndex,
   setListOfThreeQuestions,
@@ -20,11 +20,17 @@ function Home({
   const [dayScoreSelected, setDayScoreSelected] = useState(5);
   const [currentDate, setCurrentDate] = useState(new Date());
 
+  const listOfThreeQuestions =
+    JSON.parse(localStorage.getItem("listOfThreeQuestions")) || [];
+
+  const listOfDayRecords =
+    JSON.parse(localStorage.getItem("listOfDayRecords")) || [];
+
   // when "Submit" is pressed, listOfThreeQuestions and listOfDayRecords is updated.
   // all input options are set back to default.
   // listOfThreeQuestions and listOfDayRecords is updated for localStorage
   const handleSubmit = () => {
-    setListOfThreeQuestions((listOfThreeQuestions) => {
+    setListOfThreeQuestions(() => {
       const updatedList = [...listOfThreeQuestions, threeRandomQuestions];
       localStorage.setItem("listOfThreeQuestions", JSON.stringify(updatedList));
       return updatedList;
@@ -38,7 +44,7 @@ function Home({
       dayScoreSelected,
     };
 
-    setListOfDayRecords((listOfDayRecords) => {
+    setListOfDayRecords(() => {
       const updatedList = [...listOfDayRecords, form];
       localStorage.setItem("listOfDayRecords", JSON.stringify(updatedList));
       return updatedList;
