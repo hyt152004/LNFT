@@ -1,4 +1,4 @@
-function DayPage({ currentDayDisplay, currentDayIndex }) {
+function DayPage({ currentDayIndex }) {
   // Retrieve and parse data from localStorage
   const listOfThreeQuestions =
     JSON.parse(localStorage.getItem("listOfThreeQuestions")) || [];

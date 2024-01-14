@@ -6,7 +6,7 @@ import DayButtonList from "./DayButtonList";
 
 function Home({
   setCurrentDayDisplay,
-
+  listOfDayRecords,
   setListOfDayRecords,
   setCurrentDayIndex,
   setListOfThreeQuestions,
@@ -20,17 +20,48 @@ function Home({
   const [dayScoreSelected, setDayScoreSelected] = useState(5);
   const [currentDate, setCurrentDate] = useState(new Date());
 
-  const listOfThreeQuestions =
-    JSON.parse(localStorage.getItem("listOfThreeQuestions")) || [];
+  const [quote, setQuote] = useState("");
 
-  const listOfDayRecords =
-    JSON.parse(localStorage.getItem("listOfDayRecords")) || [];
+  const API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
+
+  async function callopenAIAPI() {
+    const APIBody = {
+      model: "gpt-3.5-turbo",
+      messages: [
+        {
+          role: "system",
+          content: "give me a motivation quote from a well-known celebrity",
+        },
+      ],
+      temperature: 0.7,
+      max_tokens: 64,
+      top_p: 1,
+    };
+    try {
+      await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + API_KEY,
+        },
+        body: JSON.stringify(APIBody),
+      })
+        .then((data) => {
+          return data.json();
+        })
+        .then((data) => {
+          setQuote(data.choices[0].message.content);
+        });
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   // when "Submit" is pressed, listOfThreeQuestions and listOfDayRecords is updated.
   // all input options are set back to default.
   // listOfThreeQuestions and listOfDayRecords is updated for localStorage
   const handleSubmit = () => {
-    setListOfThreeQuestions(() => {
+    setListOfThreeQuestions((listOfThreeQuestions) => {
       const updatedList = [...listOfThreeQuestions, threeRandomQuestions];
       localStorage.setItem("listOfThreeQuestions", JSON.stringify(updatedList));
       return updatedList;
@@ -44,7 +75,7 @@ function Home({
       dayScoreSelected,
     };
 
-    setListOfDayRecords(() => {
+    setListOfDayRecords((listOfDayRecords) => {
       const updatedList = [...listOfDayRecords, form];
       localStorage.setItem("listOfDayRecords", JSON.stringify(updatedList));
       return updatedList;
@@ -96,6 +127,10 @@ function Home({
   return (
     <div className="App">
       <hr />
+      <div>
+        <p>{quote}</p>
+        <button onClick={callopenAIAPI}>Generate A Motivation Quote</button>
+      </div>
       <div>
         <CurrentTime currentDate={currentDate} />
       </div>

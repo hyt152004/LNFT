@@ -9,6 +9,7 @@ function Question({ question, name, value, setFunction }) {
     <label>
       <p>{question}</p>
       <textarea
+        placeholder="Enter your response here!"
         name={name}
         value={value}
         onChange={(e) => {
