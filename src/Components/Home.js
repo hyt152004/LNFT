@@ -23,7 +23,7 @@ function Home({
   const [quote, setQuote] = useState("");
   const [quoteButton, setQuoteButton] = useState(false);
 
-  const API_KEY = REACT_APP_OPENAI_API_KEY;
+  const API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
 
   async function callopenAIAPI() {
     // user will not be able to press the Quote Button
