@@ -21,16 +21,21 @@ function Home({
   const [currentDate, setCurrentDate] = useState(new Date());
 
   const [quote, setQuote] = useState("");
+  const [quoteButton, setQuoteButton] = useState(false);
 
   const API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
 
   async function callopenAIAPI() {
+    // user will not be able to press the Quote Button
+    setQuoteButton(true);
+    quoteButtonTimer();
+
     const APIBody = {
       model: "gpt-3.5-turbo",
       messages: [
         {
           role: "system",
-          content: "give me a motivation quote from a well-known celebrity",
+          content: "give me a random motivational bible verse",
         },
       ],
       temperature: 0.7,
@@ -56,6 +61,18 @@ function Home({
       console.log(e);
     }
   }
+
+  // counts to 10 and after setQuoteButton(false)
+  const quoteButtonTimer = () => {
+    var timer = 10;
+    const interval = setInterval(() => {
+      timer--;
+      if (timer < 0) {
+        setQuoteButton(false);
+        clearInterval(interval);
+      }
+    }, 1000);
+  };
 
   // when "Submit" is pressed, listOfThreeQuestions and listOfDayRecords is updated.
   // all input options are set back to default.
@@ -90,15 +107,17 @@ function Home({
   // clears all localStorage when "Clear" is pressed
   const handleClear = () => {
     localStorage.clear();
+    setListOfDayRecords([]);
+    setListOfThreeQuestions([]);
   };
 
   // updates clock every second
   useEffect(() => {
-    const intervalId = setInterval(() => {
+    const interval = setInterval(() => {
       setCurrentDate(new Date());
     }, 1000);
 
-    return () => clearInterval(intervalId);
+    return () => clearInterval(interval);
   }, []);
 
   // when a Day button is pressed we set Current Day Display accordingly
@@ -129,7 +148,9 @@ function Home({
       <hr />
       <div>
         <p>{quote}</p>
-        <button onClick={callopenAIAPI}>Generate A Motivation Quote</button>
+        <button disabled={quoteButton} onClick={callopenAIAPI}>
+          Generate A Motivation Quote
+        </button>
       </div>
       <div>
         <CurrentTime currentDate={currentDate} />

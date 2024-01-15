@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Home from "./Components/Home";
 import DayPage from "./Components/DayPage";
 import { useState } from "react";
-// import { SpeedInsights } from "@vercel/speed-insights/next";
 
 function App() {
   // naming tab header name
