@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import Question from "./Question";
 import CurrentTime from "./CurrentTime";
-import Scale from "./Scale";
 import DayButtonList from "./DayButtonList";
+import Scale from "./Scale";
 
 function Home({
   setCurrentDayDisplay,
