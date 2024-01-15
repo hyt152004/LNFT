@@ -55,6 +55,7 @@ function Home({
           return data.json();
         })
         .then((data) => {
+          console.log(data);
           setQuote(data.choices[0].message.content);
         });
     } catch (e) {
