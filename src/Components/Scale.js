@@ -1,20 +1,29 @@
-function Scale({ purpose, id, setFunction, value }) {
-  const handleScaleChange = (value, operation) => {
-    operation(value);
-  };
+import { useState } from "react";
+import "./Scale.css";
+
+function Scale({ setFunction }) {
+  const [selectedEmoji, setSelectedEmoji] = useState(null);
+
+  const emojiList = ["😃", "🙂", "😐", "🙁", "😭"];
 
   return (
     <div>
-      <label htmlFor={id}>{purpose}:</label>
-      <input
-        type="number"
-        id={id}
-        name="numberInput"
-        min={1}
-        max={10}
-        value={value}
-        onChange={(e) => handleScaleChange(e.target.value, setFunction)}
-      />
+      <div className="emotionSelection">
+        <label htmlFor="selectEmotionScale">Emotion Scale: </label>
+
+        {emojiList.map((item, index) => (
+          <p
+            key={index}
+            onClick={() => {
+              setSelectedEmoji(item);
+              setFunction(item);
+            }}
+          >
+            {item}
+          </p>
+        ))}
+      </div>
+      <p>{selectedEmoji}</p>
     </div>
   );
 }
