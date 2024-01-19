@@ -3,9 +3,9 @@ import Question from "./Question";
 import CurrentTime from "./CurrentTime";
 import Scale from "./Scale";
 import DayButtonList from "./DayButtonList";
+import "./Home.css";
 
 function Home({
-  setCurrentDayDisplay,
   listOfDayRecords,
   setListOfDayRecords,
   setCurrentDayIndex,
@@ -16,8 +16,7 @@ function Home({
   const [questionOneResponse, setQuestionOneResponse] = useState("");
   const [questionTwoResponse, setQuestionTwoResponse] = useState("");
   const [questionThreeResponse, setQuestionThreeResponse] = useState("");
-  const [emotionScaleSelected, setEmotionScaleSelected] = useState(5);
-  const [dayScoreSelected, setDayScoreSelected] = useState(5);
+  const [emotionScaleSelected, setEmotionScaleSelected] = useState("");
   const [currentDate, setCurrentDate] = useState(new Date());
 
   const [quote, setQuote] = useState("");
@@ -55,7 +54,6 @@ function Home({
           return data.json();
         })
         .then((data) => {
-          console.log(data);
           setQuote(data.choices[0].message.content);
         });
     } catch (e) {
@@ -90,7 +88,6 @@ function Home({
       questionTwoResponse,
       questionThreeResponse,
       emotionScaleSelected,
-      dayScoreSelected,
     };
 
     setListOfDayRecords((listOfDayRecords) => {
@@ -102,7 +99,6 @@ function Home({
     setQuestionTwoResponse("");
     setQuestionThreeResponse("");
     setEmotionScaleSelected(5);
-    setDayScoreSelected(5);
   };
 
   // clears all localStorage when "Clear" is pressed
@@ -125,17 +121,14 @@ function Home({
   const handleDayButton = (idx) => {
     setCurrentDayIndex(idx);
 
-    setCurrentDayDisplay(() => {
-      const updatedList = [
-        listOfDayRecords[idx]?.questionOneResponse,
-        listOfDayRecords[idx]?.questionTwoResponse,
-        listOfDayRecords[idx]?.questionThreeResponse,
-        listOfDayRecords[idx]?.emotionScaleSelected,
-        listOfDayRecords[idx]?.dayScoreSelected,
-      ];
-      localStorage.setItem("currentDayDisplay", JSON.stringify(updatedList));
-      return updatedList;
-    });
+    const updatedList = [
+      listOfDayRecords[idx]?.questionOneResponse,
+      listOfDayRecords[idx]?.questionTwoResponse,
+      listOfDayRecords[idx]?.questionThreeResponse,
+      listOfDayRecords[idx]?.emotionScaleSelected,
+    ];
+    localStorage.setItem("currentDayDisplay", JSON.stringify(updatedList));
+    return updatedList;
   };
 
   // returns listOfDayRecords stored in localStorage
@@ -146,10 +139,13 @@ function Home({
 
   return (
     <div className="App">
-      <hr />
       <div>
-        <p>{quote}</p>
-        <button disabled={quoteButton} onClick={callopenAIAPI}>
+        <p className="customFont">{quote}</p>
+        <button
+          disabled={quoteButton}
+          onClick={callopenAIAPI}
+          class="btn btn-outline-success"
+        >
           Generate A Motivation Quote
         </button>
       </div>
@@ -180,21 +176,17 @@ function Home({
       </div>
 
       <Scale
-        purpose="Emotion Scale"
-        id="selectEmotionScale"
         setFunction={setEmotionScaleSelected}
         value={emotionScaleSelected}
       />
-      <Scale
-        purpose="Day Score"
-        id="selectDayScore"
-        setFunction={setDayScoreSelected}
-        value={dayScoreSelected}
-      />
 
       <div className="endAction">
-        <button onClick={handleSubmit}>Submit</button>
-        <button onClick={handleClear}>Clear</button>
+        <button class="btn btn-outline-primary" onClick={handleSubmit}>
+          Submit
+        </button>
+        <button class="btn btn-outline-danger" onClick={handleClear}>
+          Clear
+        </button>
       </div>
 
       <DayButtonList

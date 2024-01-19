@@ -1,0 +1,12 @@
+/* Example using @import in a CSS file */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+
+.questions {
+  display: flex;
+  flex-direction: column;
+}
+
+.customFont {
+  font-family: 'Courier New', Courier, monospace;
+}
