@@ -74,8 +74,7 @@ function App() {
       listOfQuestions[listOfInt[0]],
       listOfQuestions[listOfInt[1]],
       listOfQuestions[listOfInt[2]],
-      "EmotionScale",
-      "DayScore",
+      "Froggy Representation",
     ];
 
     return threeQuestions;
@@ -90,10 +89,14 @@ function App() {
       <nav>
         <ul>
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/" className="navButton">
+              Home
+            </Link>
           </li>
           <li>
-            <Link to="/about">About</Link>
+            <Link to="/about" className="navButton">
+              MyDay
+            </Link>
           </li>
         </ul>
       </nav>

@@ -1,3 +1,5 @@
+import "./dayPage.css";
+
 function DayPage({ currentDayIndex }) {
   // Retrieve and parse data from localStorage
   const listOfThreeQuestions =
@@ -15,12 +17,18 @@ function DayPage({ currentDayIndex }) {
   const allValues = result.map((entry) => entry.value);
 
   return (
-    <div>
+    <div className="dayPage">
       {Array.isArray(allValues) ? (
         allValues.map((info, idx) => (
-          <div key={idx}>
+          <div key={idx} className="infoSection">
             <b>{listOfThreeQuestions[currentDayIndex]?.[idx]}</b>
-            <p>{info}</p>
+            <p>
+              {idx !== 3 ? (
+                info
+              ) : (
+                <img src={info} alt="Not Loading :(" width={50} height={50} />
+              )}
+            </p>
           </div>
         ))
       ) : (

@@ -1,3 +1,5 @@
+import "./currentTime.css";
+
 function CurrentTime({ currentDate }) {
   const formattedDate = currentDate.toLocaleString("en-US", {
     weekday: "long",
@@ -6,14 +8,13 @@ function CurrentTime({ currentDate }) {
     day: "numeric",
     hour: "numeric",
     minute: "numeric",
-    second: "numeric",
     timeZoneName: "short",
   });
 
   return (
     <div>
-      <p>Current Date and Time:</p>
-      <p>{formattedDate}</p>
+      <p className="time">Date and Time:</p>
+      <p className="time">{formattedDate}</p>
     </div>
   );
 }
