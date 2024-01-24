@@ -10,3 +10,55 @@
 .customFont {
   font-family: 'Courier New', Courier, monospace;
 }
+
+.listOfDays {
+  display: flex;
+  flex-direction: row;
+}
+
+.quoteButton {
+  padding: 10px 20px; /* Adjust the padding values as needed */
+  background-color: #b1bc94;
+  border: none;
+  outline: none;
+  color: #ffffff; /* Text color, you can adjust it as needed */
+  cursor: pointer;
+  border-radius: 5px; /* Optional: Add border-radius for rounded corners */
+}
+
+
+
+.quote {
+  color: #99816e;
+  font-weight: 900;
+}
+
+.submitButton {
+  padding: 10px 20px; /* Adjust the padding values as needed */
+  background-color: #f3e083;
+  border: none;
+  outline: none;
+  color: #ffffff; /* Text color, you can adjust it as needed */
+  cursor: pointer;
+  border-radius: 20px; /* Optional: Add border-radius for rounded corners */
+  margin: 5px;
+}
+
+.submitButton:hover {
+  opacity: 0.8;
+}
+
+.clearButton {
+  padding: 10px 20px; /* Adjust the padding values as needed */
+  background-color: #f0bf99;
+  border: none;
+  outline: none;
+  color: #ffffff; /* Text color, you can adjust it as needed */
+  cursor: pointer;
+  border-radius: 20px; /* Optional: Add border-radius for rounded corners */
+  margin: 5px;
+}
+
+.clearButton:hover {
+  opacity: 0.8;
+}

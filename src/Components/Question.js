@@ -1,4 +1,5 @@
 import React from "react";
+import "./question.css";
 
 function Question({ question, name, value, setFunction }) {
   const handleTextAreaChange = (value, operation) => {
@@ -7,7 +8,7 @@ function Question({ question, name, value, setFunction }) {
 
   return (
     <label>
-      <p>{question}</p>
+      <p className="question">{question}</p>
       <textarea
         placeholder="Enter your response here!"
         name={name}

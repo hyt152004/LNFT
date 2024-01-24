@@ -21,6 +21,7 @@ function Home({
 
   const [quote, setQuote] = useState("");
   const [quoteButton, setQuoteButton] = useState(false);
+  const [quoteButtonOpacity, setQuoteButtonOpacity] = useState(1);
 
   const API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
 
@@ -34,7 +35,7 @@ function Home({
       messages: [
         {
           role: "system",
-          content: "give me a random motivational bible verse",
+          content: "give me a random motivational quote from frog",
         },
       ],
       temperature: 0.7,
@@ -64,10 +65,12 @@ function Home({
   // counts to 10 and after setQuoteButton(false)
   const quoteButtonTimer = () => {
     var timer = 10;
+    setQuoteButtonOpacity(0.5);
     const interval = setInterval(() => {
       timer--;
       if (timer < 0) {
         setQuoteButton(false);
+        setQuoteButtonOpacity(1);
         clearInterval(interval);
       }
     }, 1000);
@@ -140,13 +143,14 @@ function Home({
   return (
     <div className="App">
       <div>
-        <p className="customFont">{quote}</p>
+        <p className="quote">{quote}</p>
         <button
           disabled={quoteButton}
           onClick={callopenAIAPI}
-          class="btn btn-outline-success"
+          className="quoteButton"
+          style={{ opacity: quoteButtonOpacity }}
         >
-          Generate A Motivation Quote
+          Froggy Quote of the Day
         </button>
       </div>
       <div>
@@ -181,10 +185,10 @@ function Home({
       />
 
       <div className="endAction">
-        <button class="btn btn-outline-primary" onClick={handleSubmit}>
+        <button className="submitButton" onClick={handleSubmit}>
           Submit
         </button>
-        <button class="btn btn-outline-danger" onClick={handleClear}>
+        <button className="clearButton" onClick={handleClear}>
           Clear
         </button>
       </div>

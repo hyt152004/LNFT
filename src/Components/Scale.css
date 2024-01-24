@@ -1,7 +1,12 @@
 .emotionSelection {
   display: flex;
-  /* flex-direction: column; */
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center; 
+}
+
+.statement {
+  color: #99816e;
+  font-weight: 700;
 }

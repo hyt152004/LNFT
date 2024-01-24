@@ -1,0 +1,23 @@
+.listOfDays {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center; /* Center items horizontally */
+  justify-content: center; /* Center items vertically */
+  margin: auto; /* Center the container itself */
+}
+
+.dayButton {
+  padding: 10px 20px; /* Adjust the padding values as needed */
+  background-color: #8cb648;
+  border: none;
+  outline: none;
+  color: #ffffff; /* Text color, you can adjust it as needed */
+  cursor: pointer;
+  border-radius: 20px; /* Optional: Add border-radius for rounded corners */
+  margin: 5px;
+}
+
+.dayButton:hover {
+  opacity: 0.8;
+}
